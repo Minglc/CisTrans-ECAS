@@ -21,7 +21,7 @@ This script constructs prediction models for gene expression based on SNPs in th
 $ Rscript gcta_cis.R [options]
 ```
 ##### Options:
-```
+<pre>
   --gffs_file=value   An RData file containing gene annotation information, including a data frame named 'gffs' with columns Gene, chr, start, end, strand, Qsymbols, and Note.
   --exp_file=value   An RData file containing a gene expression matrix with a matrix named 'exp_m', where row names represent gene IDs and column names represent individual IDs.
   --genodir=value   Directory containing genotype data in plink's binary format, including .bed, .bim, and .fam files, saved per chromosome.
@@ -32,7 +32,7 @@ $ Rscript gcta_cis.R [options]
   --extend=value   The range of cis-regulatory regions around genes. SNPs within a distance less than 'extend' from genes are used to build gene expression prediction models. e.g., extend=100000.
   --ncor=value   The number of threads to use.
   --help   Display this help message.
-```
+</pre>
 ##### Example:
 ```
 $ cd ~/test/
