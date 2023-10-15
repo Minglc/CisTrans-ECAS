@@ -13,7 +13,7 @@ It also depends on the following R packages:
 + [fdrtool](https://cran.r-project.org/web/packages/fdrtool/index.html): Estimates false discovery rates (FDR).
 
 ## Applications
-###1. Decomposition of gene expression into cis- and trans-components
+### 1. Decomposition of gene expression into cis- and trans-components
 #### gcta_cis.R
 This script constructs prediction models for gene expression based on SNPs in the vicinity of genes, depending on GCTA.
 ##### Usage: 
@@ -53,7 +53,7 @@ $ Rscript merge_cis_res.R [options]
 $ Rscript merge_cis_res.R --file_dir=./test_res/gcta_cis
 ```
 
-###2. Associating phenotypes with cis- and trans-components of gene expression to prioritize candidate genes
+### 2. Associating phenotypes with cis- and trans-components of gene expression to prioritize candidate genes
 #### cistrans_twas.R
 This script is used to separately associate phenotypes with the cis- and trans-components of gene expression to identify candidate genes that influence the phenotype.
 ##### Usage: 
@@ -77,7 +77,7 @@ $ Rscript cistrans_twas.R [options]
 $ Rscript cistrans_twas.R   --gffs_file=./test_data/gffs.RData  --K_file=./test_data/Kinship.RData  --pheno_file=./test_data/pheno.RData  --vc_file=./test_res/gcta_cis/gcta_cis_vc.RData  --cis_file=./test_res/gcta_cis/gcta_cis_cis.RData  --trans_file=./test_res/gcta_cis/gcta_cis_trans.RData  --out_dir=./test_res/cistrans_twas  --p_threshold=1.62e-6 
 ```
 
-###3. Associating e-traits with cis- and trans-components of gene expression to identify gene upstream regulatory factors
+### 3. Associating e-traits with cis- and trans-components of gene expression to identify gene upstream regulatory factors
 #### cistrans_etwas.R
 This script is used to separately associate e-traits (gene expression levels) with the cis- and trans-components of gene expression to identify upstream regulatory factors that influence e-trait expression.
 ##### Usage: 
