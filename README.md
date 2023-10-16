@@ -1,5 +1,5 @@
 # CisTrans-ECAS
-This procedure integrates the association of cis- and trans-components of gene expression with the phenotype or expression traits (e-traits), to prioritize causal genes and construct regulatory networks.
+This program integrates the association of cis- and trans-components of gene expression with the phenotype or expression traits (e-traits), to prioritize causal genes and construct regulatory networks.
 
 
 ## Dependencies
