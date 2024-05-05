@@ -102,3 +102,6 @@ $ Rscript cistrans_etwas.R [options]
 $  Rscript cistrans_etwas.R   --gffs_file=./test_data/gffs.RData  --K_file=./test_data/Kinship.RData  --exp_file=./test_data/exp_matrix.RData  --gene_file=./test_data/genes.RData  --vc_file=./test_res/gcta_cis/gcta_cis_vc.RData  --cis_file=./test_res/gcta_cis/gcta_cis_cis.RData  --trans_file=./test_res/gcta_cis/gcta_cis_trans.RData  --out_dir=./test_res/cistrans_etwas  --p_threshold=1.62e-6 
 ```
 
+## Publications
+1. Ming, L., Fu, D., Wu, Z. et al. Transcriptome-wide association analyses reveal the impact of regulatory variants on rice panicle architecture and causal gene regulatory networks. Nat Commun 14, 7501 (2023). https://doi.org/10.1038/s41467-023-43077-6
+
