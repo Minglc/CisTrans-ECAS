@@ -54,7 +54,8 @@ for (arg in args) {
 
 
 gcta_gene_cis_pvalue <- function(counts_matrix, gffs, chr, extend=1e5, ncor=2, geno_dir, gfile_name, tmp_dir, plink_dir, gcta_dir, filter.maf=0.05){
-    library(parallel)
+    #library(parallel)
+    library(pbmcapply)
     require(snpStats)
     fam_file <- sprintf("%s/%s.fam",geno_dir,gfile_name)
     vars.all <- read.table(fam_file,stringsAsFactors=F,header=F)[,1]
@@ -67,7 +68,7 @@ gcta_gene_cis_pvalue <- function(counts_matrix, gffs, chr, extend=1e5, ncor=2, g
     bfile <- sprintf("%s/%s",geno_dir,gfile_name)
     
     func <-  function(gene){
-       print(gene)
+       #print(gene)
        left <- gffs[match(gene,gffs$Gene),"start"] - extend; right <- gffs[match(gene,gffs$Gene),"end"] + extend
        snp_s <- snp_all[snp_all[,4] >= left & snp_all[,4] <= right,2]
        
@@ -78,14 +79,14 @@ gcta_gene_cis_pvalue <- function(counts_matrix, gffs, chr, extend=1e5, ncor=2, g
        #write(paste(vars.u,vars.u,sep="\t"),file=ind_file)
        write(paste(vars.all,vars.all,sep="\t"),file=ind_file)  ##############
        write(snp_s, file=snp_file)
-       system(sprintf("%s --bfile %s --extract %s --keep %s --noweb --make-bed --maf %f --out %s", plink_dir,bfile,snp_file,ind_file,filter.maf,f.plink))
+       system(sprintf("%s --bfile %s --extract %s --keep %s --noweb --make-bed --maf %f --out %s > /dev/null 2>&1", plink_dir,bfile,snp_file,ind_file,filter.maf,f.plink))
        
        grm_file <- sprintf("%s.grm",tmp_f)
-       system(sprintf("%s --bfile %s --autosome --maf 0.05 --make-grm-inbred --out %s", gcta_dir, f.plink,grm_file))
+       system(sprintf("%s --bfile %s --autosome --maf 0.05 --make-grm-inbred --out %s > /dev/null 2>&1", gcta_dir, f.plink,grm_file))
        phe_file <- sprintf("%s.phen",tmp_f)
        write.table(cbind(vars.u,vars.u,counts_m[gene,vars.u]), file=phe_file, quote=F, row.names=F, col.names=F, sep="\t")
        reml_file <- sprintf("%s.reml",tmp_f)
-       system(sprintf("%s --reml --reml-pred-rand --grm %s --pheno %s --out %s", gcta_dir, grm_file, phe_file, reml_file))
+       system(sprintf("%s --reml --reml-pred-rand --grm %s --pheno %s --out %s > /dev/null 2>&1", gcta_dir, grm_file, phe_file, reml_file))
        
        summ_file <- sprintf("%s.hsq", reml_file)
        blp_file <- sprintf("%s.indi.blp", reml_file)
@@ -101,7 +102,7 @@ gcta_gene_cis_pvalue <- function(counts_matrix, gffs, chr, extend=1e5, ncor=2, g
           cis_fit <- blp_res[vars.u,3]; names(cis_fit) <- vars.u
           trans_fit <- blp_res[vars.u,5]; names(trans_fit) <- vars.u  ############
           
-          system(sprintf("%s --bfile %s --blup-snp %s --out %s", gcta_dir,f.plink,blp_file, tmp_f))
+          system(sprintf("%s --bfile %s --blup-snp %s --out %s > /dev/null 2>&1", gcta_dir,f.plink,blp_file, tmp_f))
           pred_file <- sprintf("%s.snp.blp", tmp_f)
           
           plink.data <- snpStats::read.plink(f.plink)
@@ -131,7 +132,8 @@ gcta_gene_cis_pvalue <- function(counts_matrix, gffs, chr, extend=1e5, ncor=2, g
        return(list(res_vc=vc, res_cis=cis_fit, res_trans=trans_fit, cis_pred=cis_pred))
     }
     
-    system.time(res <- mclapply(gene_all, func, mc.cores=getOption("mc.cores",ncor)))
+    #system.time(res <- mclapply(gene_all, func, mc.cores=getOption("mc.cores",ncor)))
+    res <- pbmclapply(gene_all, func, mc.cores=ncor, ignore.interactive=TRUE)
     res_vc <- do.call(rbind, lapply(res,function(x) x$res_vc)); rownames(res_vc) <- gene_all
     res_cis <- t(do.call(cbind,lapply(res,function(x) x$res_cis))); rownames(res_cis) <- gene_all
     res_trans <- t(do.call(cbind,lapply(res,function(x) x$res_trans))); rownames(res_trans) <- gene_all
@@ -148,10 +150,11 @@ for(chr in chrs){
    log_file <- sprintf("%s/gcta_cis_pvalue_%s.log", out_dir, chr)
    if(file.exists(log_file)){ print(sprintf("%s already exists!", log_file)); next }
    system(sprintf("touch %s", log_file))
-   print(chr)
+   print(sprintf("Processing %s",chr))
    gfilename <- sprintf(gfile_prefix, chr)
-   res <- gcta_gene_cis_pvalue(counts_matrix=exp_m, gffs=gffs, chr=chr, extend=1e5, ncor=2, geno_dir=genodir, gfile_name=gfilename, tmp_dir=out_dir, plink_dir=plinkdir, gcta_dir=gctadir, filter.maf=0.05)
+   res <- gcta_gene_cis_pvalue(counts_matrix=exp_m, gffs=gffs, chr=chr, extend=extend, ncor=ncor, geno_dir=genodir, gfile_name=gfilename, tmp_dir=out_dir, plink_dir=plinkdir, gcta_dir=gctadir, filter.maf=0.05)
    save(res, file=sprintf("%s/gcta_cis_pred_%s.RData", out_dir, chr))
 }
+
 
 
