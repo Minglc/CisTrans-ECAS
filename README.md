@@ -9,6 +9,7 @@ CisTrans-ECAS is mainly tested in R-3.5.1. It depends on the following software:
 
 It also depends on the following R packages:
 + [snpStats](https://bioconductor.org/packages/3.8/bioc/html/snpStats.html): Used to read genotype data from binary genotype files.
++ [pbmcapply](https://github.com/kvnkuang/pbmcapply): Performs parallel computations with a progress bar.
 + [cpgen](https://rdrr.io/cran/cpgen/man/cGWAS.emmax.html): Used to fit linear mixed models for the association analysis of traits or e-traits with the cis- or trans-components of gene expression.
 + [fdrtool](https://cran.r-project.org/web/packages/fdrtool/index.html): Estimates false discovery rates (FDR).
 
