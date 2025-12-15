@@ -13,6 +13,33 @@ It also depends on the following R packages:
 + [cpgen](https://rdrr.io/cran/cpgen/man/cGWAS.emmax.html): Used to fit linear mixed models for the association analysis of traits or e-traits with the cis- or trans-components of gene expression.
 + [fdrtool](https://cran.r-project.org/web/packages/fdrtool/index.html): Estimates false discovery rates (FDR).
 
+
+### Installation
+
+The recommended way to set up the environment is using Conda.
+
+1.  **Clone the repository.**
+    First, clone the repository to your local machine and navigate into the project directory.
+    ```bash
+    git clone https://github.com/Minglc/CisTrans-ECAS.git
+    cd CisTrans-ECAS
+    ```
+
+2.  **Create and activate the Conda environment.**
+    This command uses the `requirements.yml` file within the repository to install `R`, `PLINK`, `GCTA`, and other required packages.
+    ```bash
+    conda env create -f requirements.yml
+    conda activate cistrans-ecas-env
+    ```
+
+3.  **Install the `cpgen` R package.**
+    After activating the environment, start an `R` session and run the following command to install `cpgen` from GitHub.
+    ```R
+    remotes::install_github("cheuerde/cpgen")
+    ```
+    **Important:** During the installation, if you are prompted to update packages, please select the option for **`None`** (usually option `3`). This ensures that dependency versions remain consistent with the environment file.
+
+
 ## Applications
 ### 1. Decomposition of gene expression into cis- and trans-components
 #### gcta_cis.R
