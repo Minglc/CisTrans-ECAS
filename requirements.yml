@@ -1,0 +1,26 @@
+name: cistrans-ecas-env
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-base
+  - python=3.10
+  - plink
+  - gcta
+  
+  - r-pbmcapply
+  - bioconductor-snpstats
+  - r-fdrtool
+  - r-matrix
+  - r-lme4
+  - r-pedigreemm
+
+  - c-compiler
+  - cxx-compiler
+  
+  - gsl
+  - zlib
+  - bzip2
+  
+  - r-remotes
