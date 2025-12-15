@@ -14,7 +14,7 @@ It also depends on the following R packages:
 + [fdrtool](https://cran.r-project.org/web/packages/fdrtool/index.html): Estimates false discovery rates (FDR).
 
 
-### Installation
+## Installation
 
 The recommended way to set up the environment is using Conda.
 
