@@ -51,7 +51,7 @@ $ Rscript gcta_cis.R [options]
 ##### Options:
 ```
   --gffs_file=value   An RData file containing gene annotation information, including a data frame named 'gffs' with columns Gene, chr, start, end, strand, Qsymbols, and Note.
-  --exp_file=value   An RData file containing a gene expression matrix with a matrix named 'exp_m', where row names represent gene IDs and column names represent individual IDs.
+  --exp_file=value   An RData file containing a gene expression matrix named 'exp_m' (a matrix object, not a data frame), where row names represent gene IDs and column names represent individual IDs.
   --genodir=value   Directory containing genotype data in plink's binary format, including .bed, .bim, and .fam files, saved per chromosome.
   --gfile_prefix=value   Pattern for the file names of genotype data, where chromosome number is represented by %s, exclusive of suffix.
   --plinkdir=value   Path to the plink program.
